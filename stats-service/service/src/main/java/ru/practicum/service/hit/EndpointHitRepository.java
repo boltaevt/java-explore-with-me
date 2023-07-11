@@ -15,7 +15,7 @@ public interface EndpointHitRepository extends JpaRepository<EndpointHit, Long> 
             "join App as ap on ap.id = eh.app.id " +
             "where eh.timestamp >= :start " +
             "and eh.timestamp <= :end " +
-            "and ((:uris is null) or (eh.uri in :uris)) " +
+            "and ((coalesce(:uris, '') = '') or (eh.uri in :uris)) " +
             "group by ap.name, eh.uri " +
             "order by count(eh.ip) desc")
     Collection<ViewStatsDto> getViewStats(LocalDateTime start, LocalDateTime end, Collection<String> uris);
