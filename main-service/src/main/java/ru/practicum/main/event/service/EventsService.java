@@ -26,6 +26,7 @@ import ru.practicum.main.request.dto.ParticipationRequestDto;
 import ru.practicum.main.request.mapper.RequestsMapper;
 import ru.practicum.main.request.model.Request;
 import ru.practicum.main.request.repository.RequestsRepository;
+import ru.practicum.main.request.enums.RequestStatus;
 import ru.practicum.main.stat.StatService;
 import ru.practicum.main.user.dto.UserShortDto;
 import ru.practicum.main.user.event.EventRequestStatusUpdateRequest;
