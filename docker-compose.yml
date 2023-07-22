@@ -28,10 +28,17 @@ services:
     build: main-service
     image: main-service
     container_name: main-service
-    ports:
-      - "8080:8080"
     depends_on:
       - ewm-db
+      - stats-server
+    ports:
+      - "8080:8080"
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://ewm-db:5432/main
+      - SPRING_DATASOURCE_USERNAME=root
+      - SPRING_DATASOURCE_PASSWORD=root
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+      - STATS_SERVICE_URL=http://stats-server:9090
 
   ewm-db:
     image: postgres:14-alpine
