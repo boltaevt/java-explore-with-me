@@ -9,10 +9,13 @@ import ru.practicum.main.event.dto.NewEventDto;
 import ru.practicum.main.event.dto.UpdateEventUserRequest;
 import ru.practicum.main.event.mapper.EventMapper;
 import ru.practicum.main.event.service.EventsService;
+import ru.practicum.main.rating.dto.RatingDto;
+import ru.practicum.main.rating.enums.RatingState;
 import ru.practicum.main.request.dto.ParticipationRequestDto;
 
 import javax.validation.constraints.Positive;
 import javax.validation.constraints.PositiveOrZero;
+import javax.xml.bind.ValidationException;
 import java.util.Collection;
 
 @RestController
@@ -35,7 +38,7 @@ public class UserEventsController {
     @ResponseStatus(HttpStatus.CREATED)
     public EventFullDto addUserEvent(@PathVariable Long userId,
                                      @Validated @RequestBody NewEventDto newEventDto) {
-        return EventMapper.toEventFullDto(eventsService.addUserEvent(userId, newEventDto), 0, 0);
+        return EventMapper.toEventFullDto(eventsService.addUserEvent(userId, newEventDto), 0, 0, 0);
     }
 
     @GetMapping("/{eventId}")
@@ -62,5 +65,18 @@ public class UserEventsController {
                                                                  @PathVariable Long eventId,
                                                                  @RequestBody EventRequestStatusUpdateRequest eventRequestStatusUpdateRequest) {
         return eventsService.updateUserEventRequest(userId, eventId, eventRequestStatusUpdateRequest);
+    }
+
+    @PutMapping("/{eventId}/rating")
+    public RatingDto addEventRating(@PathVariable Long userId,
+                                    @PathVariable Long eventId,
+                                    @RequestParam(defaultValue = "LIKE") RatingState state) throws ValidationException {
+        return eventsService.addEventRating(userId, eventId, state);
+    }
+
+    @DeleteMapping("/{eventId}/rating")
+    public void deleteEventRating(@PathVariable Long userId,
+                                  @PathVariable Long eventId) {
+        eventsService.deleteEventRating(userId, eventId);
     }
 }
