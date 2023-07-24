@@ -1,9 +1,9 @@
 {
 	"info": {
-		"_postman_id": "935dadd9-cade-4d27-9214-dc2ba9a1d8d7",
+		"_postman_id": "f02d5c87-93b4-4f74-8702-ddaf264cbb36",
 		"name": "Test Explore With Me - Feature likes/dislikes, event rating",
-		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
-		"_exporter_id": "26968998"
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "23355723"
 	},
 	"item": [
 		{

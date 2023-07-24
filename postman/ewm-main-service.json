@@ -1,9 +1,10 @@
 {
   "info": {
-    "_postman_id": "c5f32750-868a-4b5c-9244-e8c10662a8e0",
+    "_postman_id": "4f622f31-328a-4506-95bd-66359cfbe749",
     "name": "Test Explore With Me - Main service",
-    "schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
-    "_exporter_id": "26968998"
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "13708500",
+    "_collection_link": "https://universal-shadow-295426.postman.co/workspace/My-Workspace~4200f6aa-0504-44b1-8a1d-707d0dcbd5ce/collection/13708500-4f622f31-328a-4506-95bd-66359cfbe749?action=share&creator=13708500&source=collection_link"
   },
   "item": [
     {
@@ -5543,7 +5544,16 @@
                         }
                       }
                     },
-                    "url": "{{baseUrl}}/admin/users"
+                    "url": {
+                      "raw": "{{baseUrl}}/admin/users",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "admin",
+                        "users"
+                      ]
+                    }
                   },
                   "response": []
                 },
@@ -5624,7 +5634,16 @@
                         }
                       }
                     },
-                    "url": "{{baseUrl}}/admin/users"
+                    "url": {
+                      "raw": "{{baseUrl}}/admin/users",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "admin",
+                        "users"
+                      ]
+                    }
                   },
                   "response": []
                 },
@@ -5705,7 +5724,16 @@
                         }
                       }
                     },
-                    "url": "{{baseUrl}}/admin/users"
+                    "url": {
+                      "raw": "{{baseUrl}}/admin/users",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "admin",
+                        "users"
+                      ]
+                    }
                   },
                   "response": []
                 },
@@ -5786,7 +5814,16 @@
                         }
                       }
                     },
-                    "url": "{{baseUrl}}/admin/users"
+                    "url": {
+                      "raw": "{{baseUrl}}/admin/users",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "admin",
+                        "users"
+                      ]
+                    }
                   },
                   "response": []
                 },
@@ -5867,7 +5904,16 @@
                         }
                       }
                     },
-                    "url": "{{baseUrl}}/admin/users"
+                    "url": {
+                      "raw": "{{baseUrl}}/admin/users",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "admin",
+                        "users"
+                      ]
+                    }
                   },
                   "response": []
                 },
@@ -5948,7 +5994,16 @@
                         }
                       }
                     },
-                    "url": "{{baseUrl}}/admin/users"
+                    "url": {
+                      "raw": "{{baseUrl}}/admin/users",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "admin",
+                        "users"
+                      ]
+                    }
                   },
                   "response": []
                 }
@@ -6041,7 +6096,16 @@
                         }
                       }
                     },
-                    "url": "{{baseUrl}}/admin/users"
+                    "url": {
+                      "raw": "{{baseUrl}}/admin/users",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "admin",
+                        "users"
+                      ]
+                    }
                   },
                   "response": []
                 },
@@ -6125,7 +6189,16 @@
                         }
                       }
                     },
-                    "url": "{{baseUrl}}/admin/users"
+                    "url": {
+                      "raw": "{{baseUrl}}/admin/users",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "admin",
+                        "users"
+                      ]
+                    }
                   },
                   "response": []
                 },
@@ -6209,7 +6282,16 @@
                         }
                       }
                     },
-                    "url": "{{baseUrl}}/admin/users"
+                    "url": {
+                      "raw": "{{baseUrl}}/admin/users",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "admin",
+                        "users"
+                      ]
+                    }
                   },
                   "response": []
                 },
@@ -6293,7 +6375,16 @@
                         }
                       }
                     },
-                    "url": "{{baseUrl}}/admin/users"
+                    "url": {
+                      "raw": "{{baseUrl}}/admin/users",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "admin",
+                        "users"
+                      ]
+                    }
                   },
                   "response": []
                 },
@@ -6377,7 +6468,16 @@
                         }
                       }
                     },
-                    "url": "{{baseUrl}}/admin/users"
+                    "url": {
+                      "raw": "{{baseUrl}}/admin/users",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "admin",
+                        "users"
+                      ]
+                    }
                   },
                   "response": []
                 },
@@ -6461,7 +6561,16 @@
                         }
                       }
                     },
-                    "url": "{{baseUrl}}/admin/users"
+                    "url": {
+                      "raw": "{{baseUrl}}/admin/users",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "admin",
+                        "users"
+                      ]
+                    }
                   },
                   "response": []
                 },
@@ -6545,7 +6654,16 @@
                         }
                       }
                     },
-                    "url": "{{baseUrl}}/admin/users"
+                    "url": {
+                      "raw": "{{baseUrl}}/admin/users",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "admin",
+                        "users"
+                      ]
+                    }
                   },
                   "response": []
                 },
@@ -6629,7 +6747,16 @@
                         }
                       }
                     },
-                    "url": "{{baseUrl}}/admin/users"
+                    "url": {
+                      "raw": "{{baseUrl}}/admin/users",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "admin",
+                        "users"
+                      ]
+                    }
                   },
                   "response": []
                 },
@@ -6713,7 +6840,16 @@
                         }
                       }
                     },
-                    "url": "{{baseUrl}}/admin/users"
+                    "url": {
+                      "raw": "{{baseUrl}}/admin/users",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "admin",
+                        "users"
+                      ]
+                    }
                   },
                   "response": []
                 },
@@ -6797,7 +6933,16 @@
                         }
                       }
                     },
-                    "url": "{{baseUrl}}/admin/users"
+                    "url": {
+                      "raw": "{{baseUrl}}/admin/users",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "admin",
+                        "users"
+                      ]
+                    }
                   },
                   "response": []
                 },
@@ -6881,7 +7026,16 @@
                         }
                       }
                     },
-                    "url": "{{baseUrl}}/admin/users"
+                    "url": {
+                      "raw": "{{baseUrl}}/admin/users",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "admin",
+                        "users"
+                      ]
+                    }
                   },
                   "response": []
                 },
@@ -6965,7 +7119,16 @@
                         }
                       }
                     },
-                    "url": "{{baseUrl}}/admin/users"
+                    "url": {
+                      "raw": "{{baseUrl}}/admin/users",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "admin",
+                        "users"
+                      ]
+                    }
                   },
                   "response": []
                 }
@@ -7234,7 +7397,16 @@
                       "mode": "raw",
                       "raw": ""
                     },
-                    "url": "{{baseUrl}}/admin/categories"
+                    "url": {
+                      "raw": "{{baseUrl}}/admin/categories",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "admin",
+                        "categories"
+                      ]
+                    }
                   },
                   "response": []
                 },
@@ -7303,7 +7475,16 @@
                       "mode": "raw",
                       "raw": ""
                     },
-                    "url": "{{baseUrl}}/admin/categories"
+                    "url": {
+                      "raw": "{{baseUrl}}/admin/categories",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "admin",
+                        "categories"
+                      ]
+                    }
                   },
                   "response": []
                 },
@@ -7372,7 +7553,16 @@
                       "mode": "raw",
                       "raw": ""
                     },
-                    "url": "{{baseUrl}}/admin/categories"
+                    "url": {
+                      "raw": "{{baseUrl}}/admin/categories",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "admin",
+                        "categories"
+                      ]
+                    }
                   },
                   "response": []
                 }
@@ -7562,7 +7752,16 @@
                         }
                       }
                     },
-                    "url": "{{baseUrl}}/admin/categories",
+                    "url": {
+                      "raw": "{{baseUrl}}/admin/categories",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "admin",
+                        "categories"
+                      ]
+                    },
                     "description": "Обратите внимание: имя категории должно быть уникальным"
                   },
                   "response": []
@@ -7646,7 +7845,16 @@
                         }
                       }
                     },
-                    "url": "{{baseUrl}}/admin/categories",
+                    "url": {
+                      "raw": "{{baseUrl}}/admin/categories",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "admin",
+                        "categories"
+                      ]
+                    },
                     "description": "Обратите внимание: имя категории должно быть уникальным"
                   },
                   "response": []
@@ -8140,7 +8348,16 @@
                         }
                       }
                     },
-                    "url": "{{baseUrl}}/admin/compilations"
+                    "url": {
+                      "raw": "{{baseUrl}}/admin/compilations",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "admin",
+                        "compilations"
+                      ]
+                    }
                   },
                   "response": []
                 }
@@ -8231,7 +8448,16 @@
                         }
                       }
                     },
-                    "url": "{{baseUrl}}/admin/compilations"
+                    "url": {
+                      "raw": "{{baseUrl}}/admin/compilations",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "admin",
+                        "compilations"
+                      ]
+                    }
                   },
                   "response": []
                 },
@@ -8318,7 +8544,16 @@
                         }
                       }
                     },
-                    "url": "{{baseUrl}}/admin/compilations"
+                    "url": {
+                      "raw": "{{baseUrl}}/admin/compilations",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "admin",
+                        "compilations"
+                      ]
+                    }
                   },
                   "response": []
                 },
@@ -8405,7 +8640,16 @@
                         }
                       }
                     },
-                    "url": "{{baseUrl}}/admin/compilations"
+                    "url": {
+                      "raw": "{{baseUrl}}/admin/compilations",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "admin",
+                        "compilations"
+                      ]
+                    }
                   },
                   "response": []
                 }
@@ -8531,7 +8775,16 @@
                         }
                       }
                     },
-                    "url": "{{baseUrl}}/admin/compilations"
+                    "url": {
+                      "raw": "{{baseUrl}}/admin/compilations",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "admin",
+                        "compilations"
+                      ]
+                    }
                   },
                   "response": []
                 },
@@ -8633,7 +8886,16 @@
                         }
                       }
                     },
-                    "url": "{{baseUrl}}/admin/compilations"
+                    "url": {
+                      "raw": "{{baseUrl}}/admin/compilations",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "admin",
+                        "compilations"
+                      ]
+                    }
                   },
                   "response": []
                 }
@@ -8721,7 +8983,16 @@
                         }
                       }
                     },
-                    "url": "{{baseUrl}}/admin/compilations"
+                    "url": {
+                      "raw": "{{baseUrl}}/admin/compilations",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "admin",
+                        "compilations"
+                      ]
+                    }
                   },
                   "response": []
                 },
@@ -8804,7 +9075,16 @@
                         }
                       }
                     },
-                    "url": "{{baseUrl}}/admin/compilations"
+                    "url": {
+                      "raw": "{{baseUrl}}/admin/compilations",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "admin",
+                        "compilations"
+                      ]
+                    }
                   },
                   "response": []
                 },
@@ -9079,7 +9359,16 @@
                         }
                       }
                     },
-                    "url": "{{baseUrl}}/admin/compilations"
+                    "url": {
+                      "raw": "{{baseUrl}}/admin/compilations",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "admin",
+                        "compilations"
+                      ]
+                    }
                   },
                   "response": []
                 },
@@ -9382,7 +9671,16 @@
                 }
               }
             },
-            "url": "{{baseUrl}}/admin/categories",
+            "url": {
+              "raw": "{{baseUrl}}/admin/categories",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "admin",
+                "categories"
+              ]
+            },
             "description": "Обратите внимание: имя категории должно быть уникальным"
           },
           "response": []
@@ -9466,7 +9764,16 @@
                 }
               }
             },
-            "url": "{{baseUrl}}/admin/users"
+            "url": {
+              "raw": "{{baseUrl}}/admin/users",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "admin",
+                "users"
+              ]
+            }
           },
           "response": []
         },
@@ -10756,7 +11063,16 @@
                 }
               }
             },
-            "url": "{{baseUrl}}/admin/categories",
+            "url": {
+              "raw": "{{baseUrl}}/admin/categories",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "admin",
+                "categories"
+              ]
+            },
             "description": "Обратите внимание: имя категории должно быть уникальным"
           },
           "response": []
@@ -11358,7 +11674,16 @@
                 }
               }
             },
-            "url": "{{baseUrl}}/admin/users"
+            "url": {
+              "raw": "{{baseUrl}}/admin/users",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "admin",
+                "users"
+              ]
+            }
           },
           "response": []
         },
@@ -13349,7 +13674,16 @@
                 }
               }
             },
-            "url": "{{baseUrl}}/admin/compilations"
+            "url": {
+              "raw": "{{baseUrl}}/admin/compilations",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "admin",
+                "compilations"
+              ]
+            }
           },
           "response": []
         },
