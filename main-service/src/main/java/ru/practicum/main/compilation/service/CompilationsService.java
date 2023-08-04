@@ -42,16 +42,16 @@ public class CompilationsService {
 
     public void deleteCompilation(Long compId) {
         if (compilationsRepository.findById(compId).isEmpty()) {
-            throw new EntityNotFoundException("Подборка " + compId + "не найдена");
+            throw new EntityNotFoundException("Compilation " + compId + "not found");
         }
 
         compilationsRepository.deleteById(compId);
-        log.info("Удалена подборка {}", compId);
+        log.info("Deleted compilation {}", compId);
     }
 
     public CompilationDto updateCompilation(Long compId, UpdateCompilationRequest updateCompilationRequest) {
         Compilation compilation = compilationsRepository.findById(compId)
-                .orElseThrow(() -> new EntityNotFoundException("Подборка " + compId + " не найдена."));
+                .orElseThrow(() -> new EntityNotFoundException("Compilation " + compId + " not found."));
 
         if (updateCompilationRequest.getTitle() != null) {
             compilation.setTitle(updateCompilationRequest.getTitle());
@@ -67,7 +67,7 @@ public class CompilationsService {
 
         Compilation updatedCompilation = compilationsRepository.save(compilation);
 
-        log.info("Обновлена подборка {}", compId);
+        log.info("Updated compilation {}", compId);
 
         return CompilationsMapper.toCompilationDto(updatedCompilation,
                 eventsService.getEventShortDtos(updatedCompilation.getEvents()));
