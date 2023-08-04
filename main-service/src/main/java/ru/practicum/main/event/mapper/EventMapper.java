@@ -34,7 +34,10 @@ public class EventMapper {
                 .build();
     }
 
-    public static EventFullDto toEventFullDto(Event event, Integer views, Integer confirmedRequests) {
+    public static EventFullDto toEventFullDto(Event event,
+                                              Integer views,
+                                              Integer confirmedRequests,
+                                              Integer ratingScore) {
         return EventFullDto.builder()
                 .id(event.getId())
                 .annotation(event.getAnnotation())
@@ -52,6 +55,7 @@ public class EventMapper {
                 .state(event.getState())
                 .title(event.getTitle())
                 .views(views)
+                .ratingScore(ratingScore)
                 .build();
     }
 

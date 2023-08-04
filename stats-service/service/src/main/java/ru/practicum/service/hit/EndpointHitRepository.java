@@ -20,7 +20,6 @@ public interface EndpointHitRepository extends JpaRepository<EndpointHit, Long> 
             "order by count(eh.ip) desc")
     Collection<ViewStatsDto> getViewStats(LocalDateTime start, LocalDateTime end, Collection<String> uris);
 
-
     @Query("select new ru.practicum.common_dto.ViewStatsDto(ap.name, eh.uri, count(distinct eh.ip)) " +
             "from EndpointHit as eh " +
             "join App as ap on ap.id = eh.app.id " +

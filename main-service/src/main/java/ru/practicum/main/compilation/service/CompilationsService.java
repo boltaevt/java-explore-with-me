@@ -4,6 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ru.practicum.main.compilation.dto.NewCompilationDto;
 import ru.practicum.main.compilation.dto.CompilationDto;
 import ru.practicum.main.compilation.dto.UpdateCompilationRequest;
@@ -20,6 +21,7 @@ import java.util.Collection;
 
 @Service
 @Slf4j
+@Transactional(readOnly = true)
 public class CompilationsService {
     private final CompilationsRepository compilationsRepository;
     private final EventsRepository eventsRepository;
@@ -31,6 +33,7 @@ public class CompilationsService {
         this.eventsService = eventsService;
     }
 
+    @Transactional
     public CompilationDto createCompilation(NewCompilationDto newCompilationDto) {
         Collection<Event> events = eventsRepository.findAllById(newCompilationDto.getEvents());
         Compilation compilation = compilationsRepository.save(CompilationsMapper.toCompilation(newCompilationDto, events));
@@ -40,18 +43,20 @@ public class CompilationsService {
         return CompilationsMapper.toCompilationDto(compilation, eventsService.getEventShortDtos(events));
     }
 
+    @Transactional
     public void deleteCompilation(Long compId) {
         if (compilationsRepository.findById(compId).isEmpty()) {
-            throw new EntityNotFoundException("Compilation " + compId + "not found");
+            throw new EntityNotFoundException("Подборка " + compId + "не найдена");
         }
 
         compilationsRepository.deleteById(compId);
-        log.info("Deleted compilation {}", compId);
+        log.info("Удалена подборка {}", compId);
     }
 
+    @Transactional
     public CompilationDto updateCompilation(Long compId, UpdateCompilationRequest updateCompilationRequest) {
         Compilation compilation = compilationsRepository.findById(compId)
-                .orElseThrow(() -> new EntityNotFoundException("Compilation " + compId + " not found."));
+                .orElseThrow(() -> new EntityNotFoundException("Подборка " + compId + " не найдена."));
 
         if (updateCompilationRequest.getTitle() != null) {
             compilation.setTitle(updateCompilationRequest.getTitle());
@@ -67,7 +72,7 @@ public class CompilationsService {
 
         Compilation updatedCompilation = compilationsRepository.save(compilation);
 
-        log.info("Updated compilation {}", compId);
+        log.info("Обновлена подборка {}", compId);
 
         return CompilationsMapper.toCompilationDto(updatedCompilation,
                 eventsService.getEventShortDtos(updatedCompilation.getEvents()));
