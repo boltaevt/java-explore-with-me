@@ -87,7 +87,7 @@ public class StatService {
 
             return views;
         } catch (JsonProcessingException exception) {
-            throw new StatGettingException("Невозможно получить количество просмотров");
+            throw new StatGettingException("Impossible to get view count.");
         }
     }
 

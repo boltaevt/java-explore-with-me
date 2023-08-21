@@ -7,7 +7,7 @@ import ru.practicum.main.user.model.User;
 
 public class UserMapper {
     private UserMapper() {
-        throw new IllegalArgumentException("Utility class");
+        throw new IllegalArgumentException("This is a utility class.");
     }
 
     public static UserDto toUserDto(User user) {
