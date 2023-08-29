@@ -23,6 +23,7 @@ public class AdminCategoriesService {
         this.eventsRepository = eventsRepository;
     }
 
+    @Transactional
     public CategoryDto addNewCategory(NewCategoryDto categoryDto) {
         Category category = categoriesRepository.save(CategoryMapper.toCategory(categoryDto));
         log.info("Добавлена категория с id {}", category.getId());
