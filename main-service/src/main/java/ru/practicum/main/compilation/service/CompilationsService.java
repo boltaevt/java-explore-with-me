@@ -33,7 +33,6 @@ public class CompilationsService {
         this.eventsService = eventsService;
     }
 
-    @Transactional
     public CompilationDto createCompilation(NewCompilationDto newCompilationDto) {
         Collection<Event> events = eventsRepository.findAllById(newCompilationDto.getEvents());
         Compilation compilation = compilationsRepository.save(CompilationsMapper.toCompilation(newCompilationDto, events));
