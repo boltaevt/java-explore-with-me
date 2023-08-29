@@ -529,16 +529,8 @@ public class EventsService {
     }
 
     private Map<Long, Integer> getAllRatingScore(Collection<Event> events) {
-        Map<Long, Integer> ratingScores = new HashMap<>();
-
-        Collection<EventRatingDto> eventRatingDtos = ratingsRepository.getAllEventsRating(events.stream()
-                .map(Event::getId)
-                .collect(Collectors.toList()));
-
-        for (EventRatingDto eventRatingDto : eventRatingDtos) {
-            ratingScores.put(eventRatingDto.getId(), eventRatingDto.getRating().intValue());
-        }
-
-        return ratingScores;
+    Set<Long> eventsIds = events.stream().map(Event::getId).collect(Collectors.toSet());
+    return ratingsRepository.getAllEventsRating(eventsIds).stream()
+            .collect(Collectors.toMap(EventRatingDto::getId, eventRatingDto -> eventRatingDto.getRating().intValue()));
     }
 }
