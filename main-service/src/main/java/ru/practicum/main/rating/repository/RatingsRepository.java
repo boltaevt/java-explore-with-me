@@ -13,7 +13,7 @@ public interface RatingsRepository extends JpaRepository<Rating, Long> {
 
     @Query("select new ru.practicum.main.event.dto.EventRatingDto(ra.eventId, sum(ra.state)) " +
             "from Rating as ra " +
-            "where :eventIds is null or ra.eventId in :eventIds " +
+            "where (:eventIds is null or ra.eventId in :eventIds) " +
             "group by ra.eventId")
     Collection<EventRatingDto> getAllEventsRating(Collection<Long> eventIds);
 }
