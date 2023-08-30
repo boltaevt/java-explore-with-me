@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ru.practicum.client.HitClient;
 import ru.practicum.common_dto.ViewStatsDto;
 import ru.practicum.main.error.StatGettingException;
@@ -20,6 +21,7 @@ import java.util.stream.Collectors;
 
 @Service
 @Slf4j
+@Transactional(readOnly = true)
 public class StatService {
     private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
     private final RequestsRepository requestsRepository;
@@ -85,7 +87,7 @@ public class StatService {
 
             return views;
         } catch (JsonProcessingException exception) {
-            throw new StatGettingException("Невозможно получить количество просмотров");
+            throw new StatGettingException("Impossible to get view count.");
         }
     }
 

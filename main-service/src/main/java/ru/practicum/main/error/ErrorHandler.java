@@ -18,39 +18,38 @@ import java.util.Objects;
 
 @RestControllerAdvice
 public class ErrorHandler {
+
     private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+
+    private ApiError buildApiError(Throwable exception, HttpStatus status, String reason) {
+        return ApiError.builder()
+                .errors(getStackTraceAsString(exception))
+                .message(exception.getMessage())
+                .reason(reason)
+                .status(status.name())
+                .timestamp(LocalDateTime.now().format(FORMATTER))
+                .build();
+    }
 
     @ExceptionHandler(MethodArgumentTypeMismatchException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public ApiError validationException(final MethodArgumentTypeMismatchException exception) {
-        return ApiError.builder()
-                .errors(getStackTrace(exception))
-                .message(exception.getMessage())
-                .reason("Incorrectly made request.")
-                .status(HttpStatus.BAD_REQUEST.name())
-                .timestamp(LocalDateTime.now().format(FORMATTER))
-                .build();
+    public ApiError handleTypeMismatchException(MethodArgumentTypeMismatchException exception) {
+        return buildApiError(exception, HttpStatus.BAD_REQUEST, "Incorrect request.");
     }
 
     @ExceptionHandler(ValidationException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public ApiError vException(final ValidationException exception) {
-        return ApiError.builder()
-                .errors(getStackTrace(exception))
-                .message(exception.getMessage())
-                .reason("Incorrectly made request.")
-                .status(HttpStatus.BAD_REQUEST.name())
-                .timestamp(LocalDateTime.now().format(FORMATTER))
-                .build();
+    public ApiError handleValidationException(ValidationException exception) {
+        return buildApiError(exception, HttpStatus.BAD_REQUEST, "Incorrect request.");
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public ApiError argumentValidationException(final MethodArgumentNotValidException exception) {
+    public ApiError handleArgumentValidationException(MethodArgumentNotValidException exception) {
         return ApiError.builder()
-                .errors(getStackTrace(exception))
-                .message(getMethodArgumentNotValidExceptionMessage(exception))
-                .reason("Incorrectly made request.")
+                .errors(getStackTraceAsString(exception))
+                .message(getValidationErrorMsg(exception))
+                .reason("Incorrect request.")
                 .status(HttpStatus.BAD_REQUEST.name())
                 .timestamp(LocalDateTime.now().format(FORMATTER))
                 .build();
@@ -58,70 +57,37 @@ public class ErrorHandler {
 
     @ExceptionHandler(EntityNotFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    public ApiError validationException(final EntityNotFoundException exception) {
-        return ApiError.builder()
-                .errors(getStackTrace(exception))
-                .message(exception.getMessage())
-                .reason("The required object was not found.")
-                .status(HttpStatus.NOT_FOUND.name())
-                .timestamp(LocalDateTime.now().format(FORMATTER))
-                .build();
+    public ApiError handleEntityNotFoundException(EntityNotFoundException exception) {
+        return buildApiError(exception, HttpStatus.NOT_FOUND, "The required object was not found.");
     }
 
     @ExceptionHandler(MissingServletRequestParameterException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public ApiError requiredParameterException(final MissingServletRequestParameterException exception) {
-        return ApiError.builder()
-                .errors(getStackTrace(exception))
-                .message(exception.getMessage())
-                .reason("Incorrectly made request.")
-                .status(HttpStatus.BAD_REQUEST.name())
-                .timestamp(LocalDateTime.now().format(FORMATTER))
-                .build();
+    public ApiError handleMissingRequestParamException(MissingServletRequestParameterException exception) {
+        return buildApiError(exception, HttpStatus.BAD_REQUEST, "Incorrect request.");
     }
 
-    @ExceptionHandler({
-            EditingErrorException.class,
-            DataIntegrityViolationException.class})
+    @ExceptionHandler({EditingErrorException.class, DataIntegrityViolationException.class})
     @ResponseStatus(HttpStatus.CONFLICT)
-    public ApiError requiredParameterException(final RuntimeException exception) {
-        return ApiError.builder()
-                .errors(getStackTrace(exception))
-                .message(exception.getMessage())
-                .reason("For the requested operation the conditions are not met.")
-                .status(HttpStatus.FORBIDDEN.name())
-                .timestamp(LocalDateTime.now().format(FORMATTER))
-                .build();
+    public ApiError handleConflictExceptions(RuntimeException exception) {
+        return buildApiError(exception, HttpStatus.CONFLICT, "For the requested operation the conditions are not met.");
     }
 
     @ExceptionHandler
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    public ApiError handleException(final Throwable exception) {
-        return ApiError.builder()
-                .errors(getExceptionMessage(exception))
-                .message(exception.getMessage())
-                .reason("Internal server error.")
-                .status(HttpStatus.INTERNAL_SERVER_ERROR.name())
-                .timestamp(LocalDateTime.now().format(FORMATTER))
-                .build();
+    public ApiError handleGenericException(Throwable exception) {
+        return buildApiError(exception, HttpStatus.INTERNAL_SERVER_ERROR, "Internal server error.");
     }
 
-    private String getStackTrace(Exception exception) {
+    private String getStackTraceAsString(Throwable exception) {
         StringWriter sw = new StringWriter();
         PrintWriter pw = new PrintWriter(sw);
         exception.printStackTrace(pw);
         return sw.toString();
     }
 
-    private String getMethodArgumentNotValidExceptionMessage(MethodArgumentNotValidException exception) {
+    private String getValidationErrorMsg(MethodArgumentNotValidException exception) {
         return String.format("Field: %s. Error: %s", Objects.requireNonNull(exception.getFieldError()).getField(),
                 exception.getFieldError().getDefaultMessage());
-    }
-
-    private String getExceptionMessage(Throwable exception) {
-        StringWriter sw = new StringWriter();
-        PrintWriter pw = new PrintWriter(sw);
-        exception.printStackTrace(pw);
-        return sw.toString();
     }
 }

@@ -2,6 +2,7 @@ package ru.practicum.main.request.service;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ru.practicum.main.error.EditingErrorException;
 import ru.practicum.main.error.EntityNotFoundException;
 import ru.practicum.main.event.enums.EventState;
@@ -22,6 +23,7 @@ import java.util.stream.Collectors;
 
 @Service
 @Slf4j
+@Transactional(readOnly = true)
 public class UserRequestsService {
     private final RequestsRepository requestsRepository;
     private final UsersRepository usersRepository;
@@ -47,6 +49,7 @@ public class UserRequestsService {
                 .collect(Collectors.toList());
     }
 
+    @Transactional
     public ParticipationRequestDto addRequest(Long userId, Long eventId) {
         User user = checkUserExists(userId);
         Event event = checkEventExists(eventId);
@@ -84,6 +87,7 @@ public class UserRequestsService {
         return RequestsMapper.toParticipationRequestDto(requestsRepository.save(request));
     }
 
+    @Transactional
     public ParticipationRequestDto cancelRequest(Long userId, Long requestId) {
         checkUserExists(userId);
 

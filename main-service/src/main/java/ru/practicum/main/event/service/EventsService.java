@@ -5,6 +5,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ru.practicum.main.category.dto.CategoryDto;
 import ru.practicum.main.category.mapper.CategoryMapper;
 import ru.practicum.main.category.model.Category;
@@ -22,11 +23,16 @@ import ru.practicum.main.event.model.Event;
 import ru.practicum.main.event.model.Location;
 import ru.practicum.main.event.repository.EventsRepository;
 import ru.practicum.main.event.repository.LocationsRepository;
+import ru.practicum.main.rating.dto.RatingDto;
+import ru.practicum.main.rating.enums.RatingState;
+import ru.practicum.main.rating.mapper.RatingsMapper;
+import ru.practicum.main.rating.model.Rating;
+import ru.practicum.main.rating.repository.RatingsRepository;
 import ru.practicum.main.request.dto.ParticipationRequestDto;
+import ru.practicum.main.request.enums.RequestStatus;
 import ru.practicum.main.request.mapper.RequestsMapper;
 import ru.practicum.main.request.model.Request;
 import ru.practicum.main.request.repository.RequestsRepository;
-import ru.practicum.main.request.enums.RequestStatus;
 import ru.practicum.main.stat.StatService;
 import ru.practicum.main.user.dto.UserShortDto;
 import ru.practicum.main.user.event.EventRequestStatusUpdateRequest;
@@ -44,6 +50,7 @@ import java.util.stream.Collectors;
 
 @Service
 @Slf4j
+@Transactional(readOnly = true)
 public class EventsService {
     private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
     private final EventsRepository eventsRepository;
@@ -51,6 +58,7 @@ public class EventsService {
     private final CategoriesRepository categoriesRepository;
     private final LocationsRepository locationsRepository;
     private final RequestsRepository requestsRepository;
+    private final RatingsRepository ratingsRepository;
     private final StatService statService;
 
     public EventsService(EventsRepository eventsRepository,
@@ -58,12 +66,13 @@ public class EventsService {
                          CategoriesRepository categoriesRepository,
                          LocationsRepository locationsRepository,
                          RequestsRepository requestsRepository,
-                         StatService statService) {
+                         RatingsRepository ratingsRepository, StatService statService) {
         this.eventsRepository = eventsRepository;
         this.usersRepository = usersRepository;
         this.categoriesRepository = categoriesRepository;
         this.locationsRepository = locationsRepository;
         this.requestsRepository = requestsRepository;
+        this.ratingsRepository = ratingsRepository;
         this.statService = statService;
     }
 
@@ -84,16 +93,20 @@ public class EventsService {
 
         Map<Long, Integer> views = statService.getViews(events);
         Map<Long, Integer> confirmedRequests = statService.getConfirmedRequests(events);
+        Map<Long, Integer> ratingScores = getAllRatingScore(events);
 
         Collection<EventFullDto> eventFullDtos = new ArrayList<>();
 
         for (Event event : events) {
             int viewsCount = views.getOrDefault(event.getId(), 0);
             int confirmedRequestsCount = confirmedRequests.getOrDefault(event.getId(), 0);
+            Integer ratingScore = ratingScores.getOrDefault(event.getId(), 0);
+
             EventFullDto eventFullDto = EventMapper.toEventFullDto(
                     event,
                     viewsCount,
-                    confirmedRequestsCount
+                    confirmedRequestsCount,
+                    ratingScore
             );
 
             if (eventFullDto != null) {
@@ -106,6 +119,7 @@ public class EventsService {
         return eventFullDtos;
     }
 
+    @Transactional
     public EventFullDto updateAdminEvent(Long eventId, UpdateEventAdminRequest updateEventAdminRequest) {
         Event event = findEvent(eventId);
 
@@ -173,6 +187,8 @@ public class EventsService {
 
         Map<Long, Integer> views = statService.getViews(List.of(event));
         Map<Long, Integer> confirmedRequests = statService.getConfirmedRequests(List.of(event));
+        Integer ratingScore = getAllRatingScore(List.of(event)).getOrDefault(event.getId(), 0);
+
         event = eventsRepository.save(event);
 
         log.info("Обновлено событие {}", eventId);
@@ -180,7 +196,8 @@ public class EventsService {
         return EventMapper.toEventFullDto(
                 event,
                 views.get(event.getId()),
-                confirmedRequests.get(event.getId())
+                confirmedRequests.get(event.getId()),
+                ratingScore
         );
     }
 
@@ -222,11 +239,13 @@ public class EventsService {
         statService.addHit(request);
         Map<Long, Integer> views = statService.getViews(List.of(event));
         Map<Long, Integer> confirmedRequests = statService.getConfirmedRequests(List.of(event));
+        Integer ratingScore = getAllRatingScore(List.of(event)).getOrDefault(event.getId(), 0);
 
         return EventMapper.toEventFullDto(
                 event,
                 views.get(event.getId()),
-                confirmedRequests.get(event.getId())
+                confirmedRequests.get(event.getId()),
+                ratingScore
         );
     }
 
@@ -239,6 +258,7 @@ public class EventsService {
         return getEventShortDtos(events);
     }
 
+    @Transactional
     public Event addUserEvent(Long userId, NewEventDto newEventDto) {
         User user = getUser(userId);
         Category category = getCategory(newEventDto.getCategory());
@@ -256,16 +276,19 @@ public class EventsService {
 
         Map<Long, Integer> views = statService.getViews(List.of(event));
         Map<Long, Integer> confirmedRequests = statService.getConfirmedRequests(List.of(event));
+        Integer ratingScore = getAllRatingScore(List.of(event)).getOrDefault(event.getId(), 0);
 
         log.info("Запрошено событие {}", eventId);
 
         return EventMapper.toEventFullDto(
                 event,
                 views.get(event.getId()),
-                confirmedRequests.get(event.getId())
+                confirmedRequests.get(event.getId()),
+                ratingScore
         );
     }
 
+    @Transactional
     public EventFullDto updateUserEvent(Long userId, Long eventId, UpdateEventUserRequest updateEventUserRequest) {
         getUser(userId);
 
@@ -333,6 +356,8 @@ public class EventsService {
 
         Map<Long, Integer> views = statService.getViews(List.of(event));
         Map<Long, Integer> confirmedRequests = statService.getConfirmedRequests(List.of(event));
+        Integer ratingScore = getAllRatingScore(List.of(event)).getOrDefault(event.getId(), 0);
+
         event = eventsRepository.save(event);
 
         log.info("Обновлено событие {}", eventId);
@@ -340,7 +365,8 @@ public class EventsService {
         return EventMapper.toEventFullDto(
                 event,
                 views.get(event.getId()),
-                confirmedRequests.get(event.getId())
+                confirmedRequests.get(event.getId()),
+                ratingScore
         );
     }
 
@@ -362,6 +388,7 @@ public class EventsService {
                 .collect(Collectors.toList());
     }
 
+    @Transactional
     public EventRequestStatusUpdateResult updateUserEventRequest(Long userId,
                                                                  Long eventId,
                                                                  EventRequestStatusUpdateRequest eventRequestStatusUpdateRequest) {
@@ -406,6 +433,45 @@ public class EventsService {
         log.info("Обновлен запрос {}", eventId);
 
         return eventRequestStatusUpdateResult;
+    }
+
+    @Transactional
+    public RatingDto addEventRating(Long userId, Long eventId, RatingState state) throws ValidationException {
+        getUser(userId);
+        Event event = findEvent(eventId);
+
+        if (event.getInitiator().getId().equals(userId)) {
+            throw new ValidationException("Создатель события не может его оценить.");
+        }
+
+        if (!EventState.PUBLISHED.equals(event.getState())) {
+            throw new ValidationException("Событие должно быть опубликовано, чтобы его можно было оценить.");
+        }
+
+        if (requestsRepository.findByRequesterIdAndEventIdAndStatus(userId, eventId, RequestStatus.CONFIRMED).isEmpty()) {
+            throw new EntityNotFoundException("Подтверждённый Запрос от пользователя " + userId + " на участие в событии " + eventId + " не найден.");
+        }
+
+        Rating rating = ratingsRepository.findByUserIdAndEventId(userId, eventId)
+                .orElse(Rating.builder().userId(userId).eventId(eventId).build());
+        rating.setState(state == RatingState.LIKE ? 1L : -1L);
+
+        log.info("Добалена оценка {} событию {} от пользователя {}.", state, eventId, userId);
+
+        return RatingsMapper.toRatingDto(ratingsRepository.save(rating));
+    }
+
+    @Transactional
+    public void deleteEventRating(Long userId, Long eventId) {
+        Optional<Rating> rating = ratingsRepository.findByUserIdAndEventId(userId, eventId);
+
+        if (rating.isEmpty()) {
+            throw new EntityNotFoundException("Пользователь " + userId + " не оценивал событие " + eventId);
+        }
+
+        log.info("Удалена оценка события {} от пользователя {}.", eventId, userId);
+
+        ratingsRepository.deleteById(rating.get().getId());
     }
 
     public Collection<EventShortDto> getEventShortDtos(Collection<Event> events) {
@@ -460,5 +526,11 @@ public class EventsService {
 
     private Location addLocation(LocationDto locationDto) {
         return locationsRepository.save(LocationMapper.toLocation(locationDto));
+    }
+
+    private Map<Long, Integer> getAllRatingScore(Collection<Event> events) {
+    Set<Long> eventsIds = events.stream().map(Event::getId).collect(Collectors.toSet());
+    return ratingsRepository.getAllEventsRating(eventsIds).stream()
+            .collect(Collectors.toMap(EventRatingDto::getId, eventRatingDto -> eventRatingDto.getRating().intValue()));
     }
 }
